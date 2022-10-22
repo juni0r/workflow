@@ -1,18 +1,19 @@
 <script setup lang="ts">
 import { ref, computed } from "vue";
+import { values } from "lodash";
 
-import nodes, { type WorkflowNode } from "../nodes";
+import nodes from "@/nodes";
 
 const filter = ref("");
 const filterPattern = computed(
   () => new RegExp(filter.value.toLowerCase(), "gi")
 );
 const filteredNodes = computed(() =>
-  nodes.filter((node) => filterPattern.value.test(node.name))
+  values(nodes).filter((node) => filterPattern.value.test(node.name))
 );
 
-function dragNode(node: WorkflowNode, event: DragEvent) {
-  event.dataTransfer?.items.add(node.id, "application/x-workflow-node");
+function dragNode(event: DragEvent, id: string) {
+  event.dataTransfer?.items.add(id, "application/x-workflow-node");
   console.log("dragNode", event.dataTransfer);
 }
 </script>
@@ -23,7 +24,7 @@ function dragNode(node: WorkflowNode, event: DragEvent) {
       v-for="node in filteredNodes"
       :key="node.id"
       draggable="true"
-      @dragstart="dragNode(node, $event)"
+      @dragstart="dragNode($event, node.id)"
       class="node"
     >
       <div class="icon" :style="{ backgroundImage: `url(${node.iconURL})` }" />

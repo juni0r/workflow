@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import WorkfLowPaper from "./components/WorkflowPaper.vue";
+import WorkfLowPaper from "./components/WorkflowView.vue";
 import NodeDrawer from "./components/NodeDrawer.vue";
 </script>
 
