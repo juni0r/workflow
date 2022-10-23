@@ -1,29 +1,25 @@
 <script setup lang="ts">
-import { ref, onMounted, onUnmounted } from "vue";
+import { ref, onMounted } from "vue";
 import { dia, shapes } from "jointjs";
 
 import NodeDrawer from "./components/NodeDrawer.vue";
 import WorkfLowView from "./components/WorkflowView.vue";
+import { debounce } from "lodash";
 
 const graph = ref<dia.Graph>(new dia.Graph({}, { cellNamespace: shapes }));
-const autoSave = ref<number>(0);
 
-function save(key: string) {
-  localStorage.setItem(key, JSON.stringify(graph.value?.toJSON()));
-}
+const save = debounce(() => {
+  localStorage.setItem("workflow-graph", JSON.stringify(graph.value?.toJSON()));
+}, 250);
 
-function load(key: string) {
-  const json = localStorage.getItem(key);
+const load = () => {
+  const json = localStorage.getItem("workflow-graph");
   if (json) graph.value?.fromJSON(JSON.parse(json));
-}
+};
 
 onMounted(() => {
-  load("graph");
-  // autoSave.value = setInterval(() => save("graph"), 5000);
-});
-
-onUnmounted(() => {
-  if (autoSave.value) clearInterval(autoSave.value);
+  load();
+  graph.value.on("add change remove", save);
 });
 </script>
 
