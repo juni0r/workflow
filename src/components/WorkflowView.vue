@@ -5,20 +5,18 @@ import { removeLink, removeElement } from "@/tools";
 
 import nodes from "@/nodes";
 
-// const { TangentDirections } = connectors.Curve;
+const props = defineProps<{ graph: dia.Graph }>();
 
 const workflow = ref<HTMLElement>();
-const graph = ref<dia.Graph>();
 const paper = ref<dia.Paper>();
 
 onMounted(() => {
-  graph.value = new dia.Graph({}, { cellNamespace: shapes });
   paper.value = new dia.Paper({
     el: workflow.value,
-    model: graph.value,
+    model: props.graph,
     width: "auto",
     height: "auto",
-    gridSize: 1,
+    gridSize: 16,
     cellViewNamespace: shapes,
     markAvailable: true,
     linkPinning: false, // Prevent link being dropped in blank paper area
@@ -72,10 +70,10 @@ onMounted(() => {
 function onDrop(event: DragEvent) {
   event.dataTransfer?.items[0].getAsString((id) => {
     console.log("Drop", id, event);
-    if (!graph.value) return;
+    if (!props.graph) return;
     const nodeElement = nodes[id].getElement();
     nodeElement.position(event.offsetX, event.offsetY);
-    graph.value.addCell(nodeElement);
+    props.graph.addCell(nodeElement);
   });
 }
 </script>

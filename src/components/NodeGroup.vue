@@ -35,7 +35,7 @@ function dragNode(event: DragEvent, id: string) {
 <style scoped>
 .group-title {
   margin-bottom: 8px;
-  margin-left: 12px;
+  margin-left: 8px;
   color: #888;
   text-transform: uppercase;
   font-size: 0.8rem;

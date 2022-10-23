@@ -1,6 +1,30 @@
 <script setup lang="ts">
-import WorkfLowPaper from "./components/WorkflowView.vue";
+import { ref, onMounted, onUnmounted } from "vue";
+import { dia, shapes } from "jointjs";
+
 import NodeDrawer from "./components/NodeDrawer.vue";
+import WorkfLowView from "./components/WorkflowView.vue";
+
+const graph = ref<dia.Graph>(new dia.Graph({}, { cellNamespace: shapes }));
+const autoSave = ref<number>(0);
+
+function save(key: string) {
+  localStorage.setItem(key, JSON.stringify(graph.value?.toJSON()));
+}
+
+function load(key: string) {
+  const json = localStorage.getItem(key);
+  if (json) graph.value?.fromJSON(JSON.parse(json));
+}
+
+onMounted(() => {
+  load("graph");
+  autoSave.value = setInterval(() => save("graph"), 3000);
+});
+
+onUnmounted(() => {
+  if (autoSave.value) clearInterval(autoSave.value);
+});
 </script>
 
 <template>
@@ -8,7 +32,7 @@ import NodeDrawer from "./components/NodeDrawer.vue";
     <NodeDrawer />
   </aside>
   <main>
-    <WorkfLowPaper />
+    <WorkfLowView :graph="(graph as dia.Graph)" />
   </main>
 </template>
 

@@ -20,7 +20,7 @@ const groupedNodes = computed(() => {
 
 <template>
   <div class="node-filter">
-    <input v-model="filter" type="text" placeholder="Filter Nodes" />
+    <input v-model.trim="filter" type="search" placeholder="Filter Nodes" />
   </div>
 
   <TransitionGroup tag="div" name="fade" class="node-groups">
