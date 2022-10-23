@@ -34,14 +34,15 @@ onMounted(() => {
 
 <style scoped>
 main {
-  display: flex;
-  flex: auto;
+  display: grid;
 }
 
 aside {
-  flex: 0 1 256px;
-  padding: 12px;
-  overflow: auto;
+  display: grid;
+  grid:
+    "toolbar" min-content
+    "content" auto
+    / auto;
   background-color: #ddd;
 }
 </style>

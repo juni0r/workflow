@@ -47,29 +47,30 @@ function dragNode(
 
 <style scoped>
 .group-title {
-  margin-bottom: 8px;
+  margin-bottom: 1rem;
   color: #888;
   text-transform: uppercase;
-  font-size: 0.8rem;
+  font-size: 0.67rem;
   font-weight: bold;
 }
 
 .nodes {
   max-width: 100%;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 16px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(5rem, 1fr));
+  gap: 0.75rem;
 }
 
 .node {
   display: flex;
-  flex-flow: column nowrap;
+  flex-flow: column;
   align-items: center;
-  gap: 8px;
+  gap: 0.5rem;
   box-sizing: content-box;
-  width: 96px;
-  padding: 4px;
   cursor: grab;
+  font-size: 0.67rem;
+  font-weight: bold;
+  z-index: 1;
 }
 
 .node:active {
@@ -77,13 +78,12 @@ function dragNode(
 }
 
 .node .icon {
-  width: 64px;
-  height: 64px;
+  width: 50%;
+  aspect-ratio: 1;
 }
 
 .node .caption {
   display: inline-block;
-  font-size: 0.75rem;
-  font-weight: 600;
+  text-align: center;
 }
 </style>

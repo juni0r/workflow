@@ -1,6 +1,6 @@
 :root {
   --color-background: #eee;
-  --color-text: #444;
+  --color-text: #555;
 }
 
 *,
@@ -9,29 +9,22 @@
   box-sizing: border-box;
   margin: 0;
   position: relative;
-  font-weight: normal;
 }
 
 body {
-  width: 100vw;
-  height: 100vh;
   color: var(--color-text);
   background: var(--color-background);
   line-height: 1.6;
   font-family: system-ui, sans-serif;
   font-size: 15px;
   text-rendering: optimizeLegibility;
+  overflow: hidden;
 }
 
 #app {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  display: flex;
-  align-items: stretch;
-  justify-items: stretch;
+  display: grid;
+  grid: "aside main" 100vh / 16rem auto;
+  place-items: stretch;
 }
 
 svg tspan {

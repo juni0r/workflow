@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, onMounted } from "vue";
+import { ref, onMounted, nextTick } from "vue";
 import { dia, shapes } from "jointjs";
 import { removeLink, removeElement } from "@/tools";
 
@@ -20,7 +20,7 @@ onMounted(() => {
     cellViewNamespace: shapes,
     restrictTranslate: true,
     linkPinning: false,
-    snapLinks: { radius: 10 },
+    snapLinks: { radius: 5 },
     multiLinks: false,
     markAvailable: true,
     defaultLink: () =>
@@ -71,7 +71,7 @@ onMounted(() => {
     element.removeTools();
   });
 
-  fitToContent();
+  nextTick(() => fitToContent());
 });
 
 function fitToContent(options: dia.Paper.ScaleContentOptions = {}) {
