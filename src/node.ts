@@ -44,10 +44,10 @@ export const getNodeElement = (node: NodeDef) =>
       },
       label: {
         text: node.name,
+        yAlignment: "bottom",
+        refY: -20,
         fontSize: 15,
         fill: "#666",
-        refY: -20,
-        yAlignment: "bottom",
       },
       border: {
         strokeWidth: 0,

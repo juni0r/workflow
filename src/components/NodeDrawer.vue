@@ -6,19 +6,19 @@ import nodes from "@/nodes";
 
 const filter = ref("");
 
-const filterPattern = computed(
-  () => new RegExp(filter.value.toLowerCase(), "gi")
+const filterPattern = computed(() =>
+  filter.value ? new RegExp(filter.value.toLowerCase(), "gi") : null
 );
 
-const groupedNodes = computed(() => {
+const filteredNodes = computed(() => {
   const pattern = filterPattern.value;
-  const filteredNodes = filter.value
+  const filteredNodes = pattern
     ? values(nodes).filter((node) => pattern.test(node.name))
     : values(nodes);
   return groupBy(filteredNodes, "type");
 });
 
-const hasMatchingNodes = computed(() => !isEmpty(groupedNodes.value));
+const hasMatchingNodes = computed(() => !isEmpty(filteredNodes.value));
 </script>
 
 <template>
@@ -33,7 +33,11 @@ const hasMatchingNodes = computed(() => !isEmpty(groupedNodes.value));
       name="fade"
       class="node-groups"
     >
-      <div v-for="(nodes, type) in groupedNodes" :key="type" class="node-group">
+      <div
+        v-for="(nodes, type) in filteredNodes"
+        :key="type"
+        class="node-group"
+      >
         <NodeGroup :title="String(type)" :nodes="nodes" />
       </div>
     </TransitionGroup>

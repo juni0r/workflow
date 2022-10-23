@@ -103,9 +103,3 @@ function onDropNode({ dataTransfer, pageX, pageY }: DragEvent) {
     class="workflow"
   ></div>
 </template>
-
-<style scoped>
-.workflow {
-  flex: auto;
-}
-</style>

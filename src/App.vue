@@ -2,8 +2,8 @@
 import { ref, onMounted } from "vue";
 import { dia, shapes } from "jointjs";
 
-import NodeDrawer from "./components/NodeDrawer.vue";
-import WorkfLowView from "./components/WorkflowView.vue";
+import NodeDrawer from "@/components/NodeDrawer.vue";
+import WorkfLowView from "@/components/WorkflowView.vue";
 import { debounce } from "lodash";
 
 const graph = ref<dia.Graph>(new dia.Graph({}, { cellNamespace: shapes }));

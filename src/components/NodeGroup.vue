@@ -7,7 +7,7 @@ function dragNode(
   { target, dataTransfer, offsetX, offsetY }: DragEvent,
   node: NodeDef
 ) {
-  if (!target || !dataTransfer) return;
+  if (!(target && dataTransfer)) return;
 
   const icon = (target as HTMLElement).querySelector(".icon") as HTMLElement;
 
@@ -28,9 +28,9 @@ function dragNode(
     <TransitionGroup tag="div" name="fade" class="nodes">
       <div
         v-for="node in nodes"
+        :key="node.id"
         draggable="true"
         @dragstart="dragNode($event, node)"
-        :key="node.id"
         class="node"
       >
         <div
