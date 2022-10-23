@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref, computed } from "vue";
-import { values, groupBy } from "lodash";
+import { values, groupBy, isEmpty } from "lodash";
 import NodeGroup from "./NodeGroup.vue";
 import nodes from "@/nodes";
 
@@ -11,28 +11,37 @@ const filterPattern = computed(
 );
 
 const groupedNodes = computed(() => {
+  const pattern = filterPattern.value;
   const filteredNodes = filter.value
-    ? values(nodes).filter((node) => filterPattern.value.test(node.name))
+    ? values(nodes).filter((node) => pattern.test(node.name))
     : values(nodes);
   return groupBy(filteredNodes, "type");
 });
+
+const hasMatchingNodes = computed(() => !isEmpty(groupedNodes.value));
 </script>
 
 <template>
   <div class="node-filter">
-    <input v-model.trim="filter" type="search" placeholder="Filter Nodes" />
+    <input v-model.trim="filter" type="search" placeholder="Filter nodes" />
   </div>
 
-  <TransitionGroup tag="div" name="fade" class="node-groups">
+  <TransitionGroup
+    v-if="hasMatchingNodes"
+    tag="div"
+    name="fade"
+    class="node-groups"
+  >
     <div v-for="(nodes, type) in groupedNodes" :key="type" class="node-group">
       <NodeGroup :title="String(type)" :nodes="nodes" />
     </div>
   </TransitionGroup>
+
+  <div v-else class="hint">No matching nodes</div>
 </template>
 
 <style scoped>
 .node-filter {
-  padding: 8px 8px;
   margin-bottom: 12px;
 }
 
@@ -41,7 +50,13 @@ const groupedNodes = computed(() => {
   width: 100%;
   padding: 8px;
   border-radius: 5px;
-  font-size: 1.15rem;
+}
+
+.hint {
+  margin-bottom: 8px;
+  font-weight: bold;
+  color: #888;
+  text-align: center;
 }
 
 .node-groups {
