@@ -39,18 +39,24 @@ svg tspan {
   font-weight: bold;
 }
 
+svg .available-magnet {
+  stroke: #00ff4a;
+  transform: scale(1.2);
+  stroke-width: 3;
+}
+
 .fade-move,
 .fade-enter-active,
 .fade-leave-active {
   transition: all 0.4s cubic-bezier(0.55, 0, 0.1, 1);
 }
 
+.fade-leave-active {
+  position: absolute;
+}
+
 .fade-enter-from,
 .fade-leave-to {
   opacity: 0;
-  /* transform: scale(0.5); */
-}
-
-.fade-leave-active {
-  position: absolute;
+  transform: scale(0.01);
 }

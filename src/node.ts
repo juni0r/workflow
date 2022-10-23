@@ -44,9 +44,10 @@ export const getNodeElement = (node: NodeDef) =>
       },
       label: {
         text: node.name,
+        fontSize: 15,
+        fill: "#666",
         refY: -20,
         yAlignment: "bottom",
-        fontSize: 16,
       },
       border: {
         strokeWidth: 0,
@@ -78,8 +79,8 @@ const portIn = {
     portBody: {
       magnet: "passive",
       r: 7,
-      fill: "#999",
-      stroke: "#888",
+      fill: "#0007",
+      cursor: "pointer",
     },
   },
   markup: [
@@ -98,8 +99,8 @@ const portOut = {
     portBody: {
       magnet: true,
       r: 7,
-      fill: "#999",
-      stroke: "#888",
+      fill: "#0007",
+      cursor: "pointer",
     },
   },
   markup: [

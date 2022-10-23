@@ -19,7 +19,7 @@ onMounted(() => {
     gridSize: 16,
     cellViewNamespace: shapes,
     restrictTranslate: true,
-    linkPinning: false, // Prevent link being dropped in blank paper area
+    linkPinning: false,
     snapLinks: { radius: 10 },
     multiLinks: false,
     markAvailable: true,
@@ -29,9 +29,12 @@ onMounted(() => {
           wrapper: {
             cursor: "default",
           },
+          line: {
+            stroke: "#666",
+          },
         },
       }),
-    defaultConnectionPoint: { name: "anchor" },
+    defaultConnectionPoint: { name: "boundary" },
     defaultConnector: { name: "smooth" },
     validateConnection: function (source, _, target, magnet?) {
       if (source === target) return false;
@@ -90,9 +93,5 @@ function onDrop({ dataTransfer, offsetX, offsetY }: DragEvent) {
 <style scoped>
 .workflow {
   flex: auto;
-}
-
-.workflow :global(.available-magnet) {
-  fill: #00ff4a;
 }
 </style>

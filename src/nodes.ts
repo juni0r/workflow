@@ -26,7 +26,7 @@ const nodes = transform(
     analyze: {
       name: "Deep Analyzer",
       type: NodeType.Processor,
-      in: 2,
+      in: 1,
       out: 1,
     },
     mangle: {
@@ -44,7 +44,7 @@ const nodes = transform(
     process: {
       name: "Fast Processor",
       type: NodeType.Processor,
-      in: 3,
+      in: 2,
       out: 1,
     },
     api: {
@@ -53,7 +53,7 @@ const nodes = transform(
       in: 1,
     },
     chart: {
-      name: "Insightul Chart",
+      name: "Insightful Chart",
       type: NodeType.Output,
       in: 1,
     },
