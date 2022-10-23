@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref, onMounted } from "vue";
-import { dia, shapes, connectors } from "jointjs";
+import { dia, shapes } from "jointjs";
 import { removeLink, removeElement } from "@/tools";
 
 import nodes from "@/nodes";
@@ -18,8 +18,11 @@ onMounted(() => {
     height: "auto",
     gridSize: 16,
     cellViewNamespace: shapes,
-    markAvailable: true,
+    restrictTranslate: true,
     linkPinning: false, // Prevent link being dropped in blank paper area
+    snapLinks: { radius: 10 },
+    multiLinks: false,
+    markAvailable: true,
     defaultLink: () =>
       new shapes.standard.Link({
         attrs: {
@@ -28,7 +31,8 @@ onMounted(() => {
           },
         },
       }),
-    defaultConnectionPoint: { name: "boundary" },
+    defaultConnectionPoint: { name: "anchor" },
+    defaultConnector: { name: "smooth" },
     validateConnection: function (source, _, target, magnet?) {
       if (source === target) return false;
       return magnet?.getAttribute("port-group") === "in";
@@ -36,18 +40,12 @@ onMounted(() => {
     validateMagnet: function (_, magnet) {
       return magnet.getAttribute("magnet") !== "passive";
     },
-    defaultConnector: function (source, target, route, _, link) {
-      return connectors.curve(
-        source,
-        target,
-        route,
-        {
-          targetDirection: "auto" as unknown as undefined,
-          sourceDirection: "auto" as unknown as undefined,
-        },
-        link
-      );
-    },
+  });
+
+  paper.value.on("paper:pan", (_, dX, dY) => {
+    if (!paper.value) return;
+    const dist = paper.value.translate();
+    paper.value.translate(dist.tx - dX, dist.ty - dY);
   });
 
   paper.value.on("link:mouseenter", (link) => {
@@ -67,14 +65,14 @@ onMounted(() => {
   });
 });
 
-function onDrop(event: DragEvent) {
-  event.dataTransfer?.items[0].getAsString((id) => {
-    console.log("Drop", id, event);
-    if (!props.graph) return;
-    const nodeElement = nodes[id].getElement();
-    nodeElement.position(event.offsetX, event.offsetY);
-    props.graph.addCell(nodeElement);
-  });
+function onDrop({ dataTransfer, offsetX, offsetY }: DragEvent) {
+  if (!props.graph || !dataTransfer) return;
+
+  const offset = JSON.parse(dataTransfer.getData("offset"));
+  const nodeElement = nodes[dataTransfer.getData("id")].getElement();
+  props.graph.addCell(
+    nodeElement.position(offsetX - offset.x, offsetY - offset.y)
+  );
 }
 </script>
 

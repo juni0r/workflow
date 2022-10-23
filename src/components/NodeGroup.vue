@@ -3,9 +3,24 @@ import type { NodeDef } from "@/node";
 
 defineProps<{ title: string; nodes: NodeDef[] }>();
 
-function dragNode(event: DragEvent, id: string) {
-  event.dataTransfer?.items.add(id, "application/x-workflow-node");
-  console.log("dragNode", event);
+function dragNode(
+  { target, dataTransfer, offsetX, offsetY }: DragEvent,
+  node: NodeDef
+) {
+  if (!target || !dataTransfer) return;
+
+  const icon = (target as HTMLElement).querySelector(".icon") as HTMLElement;
+
+  dataTransfer.setData("id", node.id);
+  dataTransfer.setData(
+    "offset",
+    JSON.stringify({
+      x: offsetX - icon.offsetLeft,
+      y: offsetY - icon.offsetTop,
+    })
+  );
+
+  console.log("dragNode", node, dataTransfer.getData("offset"));
 }
 </script>
 
@@ -15,9 +30,9 @@ function dragNode(event: DragEvent, id: string) {
     <TransitionGroup tag="div" name="fade" class="nodes">
       <div
         v-for="node in nodes"
-        :key="node.id"
         draggable="true"
-        @dragstart="dragNode($event, node.id)"
+        @dragstart="dragNode($event, node)"
+        :key="node.id"
         class="node"
       >
         <div
@@ -50,13 +65,14 @@ function dragNode(event: DragEvent, id: string) {
 }
 
 .node {
+  /* position: relative; */
   display: flex;
   flex-flow: column nowrap;
-  box-sizing: content-box;
   align-items: center;
   gap: 8px;
-  padding: 8px;
+  box-sizing: content-box;
   width: 96px;
+  padding: 8px;
   cursor: grab;
 }
 

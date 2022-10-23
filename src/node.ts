@@ -77,9 +77,9 @@ const portIn = {
   attrs: {
     portBody: {
       magnet: "passive",
-      r: 6,
-      fill: "#777",
-      stroke: "#444",
+      r: 7,
+      fill: "#999",
+      stroke: "#888",
     },
   },
   markup: [
@@ -97,9 +97,9 @@ const portOut = {
   attrs: {
     portBody: {
       magnet: true,
-      r: 6,
-      fill: "#E6A502",
-      stroke: "#a07202",
+      r: 7,
+      fill: "#999",
+      stroke: "#888",
     },
   },
   markup: [

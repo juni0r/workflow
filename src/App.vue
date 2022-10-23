@@ -19,7 +19,7 @@ function load(key: string) {
 
 onMounted(() => {
   load("graph");
-  autoSave.value = setInterval(() => save("graph"), 3000);
+  // autoSave.value = setInterval(() => save("graph"), 5000);
 });
 
 onUnmounted(() => {
