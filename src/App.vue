@@ -9,12 +9,12 @@ import { debounce } from "lodash";
 const graph = ref<dia.Graph>(new dia.Graph({}, { cellNamespace: shapes }));
 
 const save = debounce(() => {
-  localStorage.setItem("workflow-graph", JSON.stringify(graph.value?.toJSON()));
+  localStorage.setItem("workflow-graph", JSON.stringify(graph.value.toJSON()));
 }, 250);
 
 const load = () => {
   const json = localStorage.getItem("workflow-graph");
-  if (json) graph.value?.fromJSON(JSON.parse(json));
+  if (json) graph.value.fromJSON(JSON.parse(json));
 };
 
 onMounted(() => {
