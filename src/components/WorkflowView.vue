@@ -45,10 +45,14 @@ onMounted(() => {
     },
   });
 
-  paper.value.on("paper:pan", (_, dX, dY) => {
+  paper.value.on("paper:pan", (_evt, dx, dy) => {
     if (!paper.value) return;
-    const dist = paper.value.translate();
-    paper.value.translate(dist.tx - dX, dist.ty - dY);
+    const { tx, ty } = paper.value.translate();
+    paper.value.translate(tx - dx, ty - dy);
+  });
+
+  paper.value.on("blank:pointerdblclick", () => {
+    fitToContent();
   });
 
   paper.value.on("link:mouseenter", (link) => {
@@ -66,16 +70,26 @@ onMounted(() => {
   paper.value.on("element:mouseleave", (element) => {
     element.removeTools();
   });
+
+  fitToContent();
 });
 
-function onDrop({ dataTransfer, offsetX, offsetY }: DragEvent) {
-  if (!props.graph || !dataTransfer) return;
+function fitToContent(options: dia.Paper.ScaleContentOptions = {}) {
+  if (!paper.value) return;
+  const maxScale = Math.max(1, paper.value.scale().sx);
+  paper.value.scaleContentToFit({ padding: 40, maxScale, ...options });
+}
 
+function onDropNode({ dataTransfer, pageX, pageY }: DragEvent) {
+  if (!(paper.value && props.graph && dataTransfer)) return;
+
+  const element = nodes[dataTransfer.getData("id")].getElement();
   const offset = JSON.parse(dataTransfer.getData("offset"));
-  const nodeElement = nodes[dataTransfer.getData("id")].getElement();
-  props.graph.addCell(
-    nodeElement.position(offsetX - offset.x, offsetY - offset.y)
+  const { x, y } = paper.value.clientToLocalPoint(
+    pageX - offset.x,
+    pageY - offset.y
   );
+  props.graph.addCell(element.position(x, y));
 }
 </script>
 
@@ -85,7 +99,7 @@ function onDrop({ dataTransfer, offsetX, offsetY }: DragEvent) {
     @dragenter.prevent
     @dragleave.prevent
     @dragover.prevent
-    @drop="onDrop"
+    @drop="onDropNode"
     class="workflow"
   ></div>
 </template>
