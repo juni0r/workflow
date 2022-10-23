@@ -44,9 +44,9 @@ export const getNodeElement = (node: NodeDef) =>
       },
       label: {
         text: node.name,
-        fontSize: 16,
         refY: -20,
         yAlignment: "bottom",
+        fontSize: 16,
       },
       border: {
         strokeWidth: 0,
@@ -77,9 +77,9 @@ const portIn = {
   attrs: {
     portBody: {
       magnet: "passive",
-      r: 8,
-      fill: "#023047",
-      stroke: "#023047",
+      r: 6,
+      fill: "#777",
+      stroke: "#444",
     },
   },
   markup: [
@@ -97,9 +97,9 @@ const portOut = {
   attrs: {
     portBody: {
       magnet: true,
-      r: 8,
+      r: 6,
       fill: "#E6A502",
-      stroke: "#023047",
+      stroke: "#a07202",
     },
   },
   markup: [

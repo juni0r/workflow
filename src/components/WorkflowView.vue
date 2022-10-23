@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref, onMounted } from "vue";
 import { dia, shapes, connectors } from "jointjs";
-import { removeLink } from "@/linkTools";
+import { removeLink, removeElement } from "@/tools";
 
 import nodes from "@/nodes";
 
@@ -20,6 +20,7 @@ onMounted(() => {
     height: "auto",
     gridSize: 1,
     cellViewNamespace: shapes,
+    markAvailable: true,
     linkPinning: false, // Prevent link being dropped in blank paper area
     defaultLink: () =>
       new shapes.standard.Link({
@@ -30,9 +31,9 @@ onMounted(() => {
         },
       }),
     defaultConnectionPoint: { name: "boundary" },
-    validateConnection: function (source, _, target, targetMagnet) {
+    validateConnection: function (source, _, target, magnet?) {
       if (source === target) return false;
-      return targetMagnet.getAttribute("port-group") === "in";
+      return magnet?.getAttribute("port-group") === "in";
     },
     validateMagnet: function (_, magnet) {
       return magnet.getAttribute("magnet") !== "passive";
@@ -57,6 +58,14 @@ onMounted(() => {
 
   paper.value.on("link:mouseleave", (link) => {
     link.removeTools();
+  });
+
+  paper.value.on("element:mouseenter", (element) => {
+    element.addTools(removeElement);
+  });
+
+  paper.value.on("element:mouseleave", (element) => {
+    element.removeTools();
   });
 });
 
@@ -85,5 +94,9 @@ function onDrop(event: DragEvent) {
 <style scoped>
 .workflow {
   flex: auto;
+}
+
+.workflow :global(.available-magnet) {
+  fill: #00ff4a;
 }
 </style>

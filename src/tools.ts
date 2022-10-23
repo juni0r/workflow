@@ -1,6 +1,12 @@
-import { dia, linkTools } from "jointjs";
+import { dia, linkTools, elementTools } from "jointjs";
 
-// Actions
+export const removeElement = new dia.ToolsView({
+  tools: [
+    // new elementTools.Boundary(),
+    new elementTools.Remove(),
+  ],
+});
+
 export const removeLink = new dia.ToolsView({
   tools: [
     new linkTools.Remove({

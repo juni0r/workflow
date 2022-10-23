@@ -14,20 +14,14 @@ import NodeDrawer from "./components/NodeDrawer.vue";
 
 <style scoped>
 main {
-  /* position: relative; */
   display: flex;
   flex: auto;
-  /* position: fixed;
-  top: 0;
-  left: 0;
-  bottom: 0;
-  right: 0; */
 }
 
 aside {
   flex: 0 1 256px;
-  overflow: auto;
   padding: 12px;
+  overflow: auto;
   background-color: #ddd;
 }
 </style>

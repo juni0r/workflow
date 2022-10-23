@@ -55,7 +55,7 @@ const nodes = transform(
     chart: {
       name: "Insightul Chart",
       type: NodeType.Output,
-      in: 2,
+      in: 1,
     },
     printer: {
       name: "Pretty Printer",
