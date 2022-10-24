@@ -3,7 +3,7 @@ import { NodeDef, NodeType } from "@/node";
 export const getNode = (id: string) => nodes.find((node) => node.id === id);
 export const getNodeElement = (id: string) => getNode(id)?.getElement();
 
-const nodes: NodeDef[] = [
+const nodes = [
   {
     id: "database",
     name: "Huge Database",
