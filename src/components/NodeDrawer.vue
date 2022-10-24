@@ -1,8 +1,10 @@
 <script setup lang="ts">
 import { ref, computed } from "vue";
 import { values, groupBy, isEmpty } from "lodash";
+import type { NodeStore } from "@/node";
 import NodeGroup from "./NodeGroup.vue";
-import nodes from "@/nodes";
+
+const props = defineProps<{ nodes: NodeStore }>();
 
 const filter = ref("");
 
@@ -13,8 +15,8 @@ const filterPattern = computed(() =>
 const filteredNodes = computed(() => {
   const pattern = filterPattern.value;
   const filteredNodes = pattern
-    ? values(nodes).filter((node) => pattern.test(node.name))
-    : values(nodes);
+    ? values(props.nodes).filter((node) => pattern.test(node.name))
+    : values(props.nodes);
   return groupBy(filteredNodes, "type");
 });
 

@@ -1,7 +1,7 @@
-import { NodeDef, NodeType } from "@/node";
+import { NodeDef, NodeType, type NodeStore } from "@/node";
 import { transform } from "lodash";
 
-const nodes = transform(
+const nodes: NodeStore = transform(
   {
     database: {
       name: "Huge Database",
@@ -100,7 +100,7 @@ const nodes = transform(
       in: 1,
     },
   },
-  (nodes: Record<string, NodeDef>, options, id) => {
+  (nodes, options, id) => {
     nodes[id] = new NodeDef({ id, ...options });
   }
 );

@@ -3,6 +3,8 @@ import { ref, onMounted } from "vue";
 import { dia, shapes } from "jointjs";
 import { debounce } from "lodash";
 
+import nodes from "@/nodes";
+
 import NodeDrawer from "@/components/NodeDrawer.vue";
 import WorkfLowView from "@/components/WorkflowView.vue";
 
@@ -25,7 +27,7 @@ onMounted(() => {
 
 <template>
   <aside>
-    <NodeDrawer />
+    <NodeDrawer :nodes="nodes" />
   </aside>
   <main>
     <WorkfLowView :graph="(graph as dia.Graph)" />
