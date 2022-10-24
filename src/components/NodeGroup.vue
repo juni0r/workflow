@@ -50,15 +50,15 @@ function dragNode(
   margin-bottom: 1rem;
   color: #888;
   text-transform: uppercase;
-  font-size: 0.67rem;
+  font-size: 0.75rem;
   font-weight: bold;
 }
 
 .nodes {
   max-width: 100%;
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(5rem, 1fr));
-  gap: 0.5rem;
+  grid-template-columns: repeat(auto-fill, minmax(6rem, 1fr));
+  gap: 1rem 0.5rem;
 }
 
 .node {
@@ -68,7 +68,7 @@ function dragNode(
   gap: 0.5rem;
   box-sizing: content-box;
   cursor: grab;
-  font-size: 0.67rem;
+  font-size: 0.8rem;
   font-weight: bold;
   z-index: 1;
 }

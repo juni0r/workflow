@@ -23,14 +23,8 @@ body {
 
 #app {
   display: grid;
-  grid: "aside main" 100vh / 14rem auto;
+  grid: "aside main" 100vh / 18rem auto;
   place-items: stretch;
-}
-
-@media (min-width: 1280px) {
-  #app {
-    grid-template-columns: 20rem auto;
-  }
 }
 
 svg tspan {
