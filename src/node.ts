@@ -1,8 +1,6 @@
 import { shapes } from "jointjs";
 import { times } from "lodash";
 
-export type NodeStore = Record<string, NodeDef>;
-
 export enum NodeType {
   Source = "source",
   Processor = "processor",
