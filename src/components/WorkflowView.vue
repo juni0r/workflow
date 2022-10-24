@@ -2,8 +2,7 @@
 import { ref, onMounted, nextTick } from "vue";
 import { dia, shapes } from "jointjs";
 import { removeLink, removeElement } from "@/tools";
-
-import nodes from "@/nodes";
+import { getNodeElement } from "@/nodes";
 
 const props = defineProps<{ graph: dia.Graph }>();
 
@@ -83,13 +82,16 @@ function fitToContent(options: dia.Paper.ScaleContentOptions = {}) {
 function onDropNode({ dataTransfer, pageX, pageY }: DragEvent) {
   if (!(paper.value && props.graph && dataTransfer)) return;
 
-  const element = nodes[dataTransfer.getData("id")].getElement();
-  const offset = JSON.parse(dataTransfer.getData("offset"));
-  const { x, y } = paper.value.clientToLocalPoint(
-    pageX - offset.x,
-    pageY - offset.y
-  );
-  props.graph.addCell(element.position(x, y));
+  const element = getNodeElement(dataTransfer.getData("id"));
+
+  if (element) {
+    const offset = JSON.parse(dataTransfer.getData("offset"));
+    const { x, y } = paper.value.clientToLocalPoint(
+      pageX - offset.x,
+      pageY - offset.y
+    );
+    props.graph.addCell(element.position(x, y));
+  }
 }
 </script>
 

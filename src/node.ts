@@ -37,7 +37,7 @@ export class NodeDef {
   }
 }
 
-export const getNodeElement = (node: NodeDef) =>
+const getNodeElement = (node: NodeDef) =>
   new shapes.standard.BorderedImage({
     size: { width: 64, height: 64 },
     attrs: {
