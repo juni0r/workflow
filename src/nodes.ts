@@ -4,12 +4,12 @@ import { transform } from "lodash";
 const nodes = transform(
   {
     database: {
-      name: "Giant Database",
+      name: "Huge Database",
       type: NodeType.Source,
       out: 1,
     },
     cloud: {
-      name: "Trendy Cloud",
+      name: "Some Cloud",
       type: NodeType.Source,
       out: 1,
     },
@@ -23,6 +23,16 @@ const nodes = transform(
       type: NodeType.Source,
       out: 1,
     },
+    stream: {
+      name: "Steady Stream",
+      type: NodeType.Source,
+      out: 1,
+    },
+    device: {
+      name: "Nice Device",
+      type: NodeType.Source,
+      out: 1,
+    },
     analyze: {
       name: "Deep Analyzer",
       type: NodeType.Processor,
@@ -30,19 +40,31 @@ const nodes = transform(
       out: 1,
     },
     mangle: {
-      name: "Mighty Mangler",
+      name: "Fierce Mangler",
       type: NodeType.Processor,
       in: 2,
       out: 1,
     },
-    patch: {
-      name: "Reliable Patcher",
+    magic: {
+      name: "Mighty Magic",
       type: NodeType.Processor,
       in: 1,
       out: 1,
     },
     process: {
       name: "Fast Processor",
+      type: NodeType.Processor,
+      in: 3,
+      out: 1,
+    },
+    rocket: {
+      name: "Rocket Science",
+      type: NodeType.Processor,
+      in: 1,
+      out: 1,
+    },
+    flame: {
+      name: "Slow Burner",
       type: NodeType.Processor,
       in: 2,
       out: 1,
@@ -52,8 +74,8 @@ const nodes = transform(
       type: NodeType.Output,
       in: 1,
     },
-    chart: {
-      name: "Insightful Chart",
+    analytics: {
+      name: "Elaborate Curve",
       type: NodeType.Output,
       in: 1,
     },
@@ -62,8 +84,18 @@ const nodes = transform(
       type: NodeType.Output,
       in: 1,
     },
-    trash: {
-      name: "Grimy Trashbin",
+    chart: {
+      name: "Insightful Chart",
+      type: NodeType.Output,
+      in: 1,
+    },
+    mail: {
+      name: "Spam Campaign",
+      type: NodeType.Output,
+      in: 1,
+    },
+    disc: {
+      name: "Just Save",
       type: NodeType.Output,
       in: 1,
     },
