@@ -55,7 +55,7 @@ const hasMatchingNodes = computed(() => !isEmpty(filteredNodes.value));
   border: none;
   width: 100%;
   padding: 0.5rem;
-  border-radius: 0.2rem;
+  border-radius: 0.25rem;
   opacity: 0.65;
   transition: opacity 300ms ease;
 }
