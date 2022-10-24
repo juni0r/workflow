@@ -8,18 +8,14 @@ const props = defineProps<{ nodes: NodeDef[] }>();
 
 const filter = ref("");
 
-const filterPattern = computed(() =>
-  filter.value ? new RegExp(filter.value.toLowerCase(), "gi") : null
-);
-
 const filteredNodes = computed(() => {
-  const pattern = filterPattern.value;
-  const filteredNodes = pattern
-    ? props.nodes.filter((node) => pattern.test(node.name))
-    : props.nodes;
-  return groupBy(filteredNodes, "type");
+  if (!filter.value) return props.nodes;
+  const pattern = new RegExp(filter.value.toLowerCase(), "i");
+  const filtered = props.nodes.filter((node) => pattern.test(node.name));
+  return filtered;
 });
 
+const groupedNodes = computed(() => groupBy(filteredNodes.value, "type"));
 const hasMatchingNodes = computed(() => !isEmpty(filteredNodes.value));
 </script>
 
@@ -35,11 +31,7 @@ const hasMatchingNodes = computed(() => !isEmpty(filteredNodes.value));
       name="fade"
       class="node-groups"
     >
-      <div
-        v-for="(nodes, type) in filteredNodes"
-        :key="type"
-        class="node-group"
-      >
+      <div v-for="(nodes, type) in groupedNodes" :key="type" class="node-group">
         <NodeGroup :title="String(type)" :nodes="nodes" />
       </div>
     </TransitionGroup>
