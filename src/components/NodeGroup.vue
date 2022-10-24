@@ -55,7 +55,6 @@ function dragNode(
 }
 
 .nodes {
-  max-width: 100%;
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(6rem, 1fr));
   gap: 1rem 0.5rem;
